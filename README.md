@@ -1,4 +1,4 @@
-# rlcar_gazebo
+# RLCar_Gazebo
 RLCar Gazebo Simulation  
 
 * Build and Source
