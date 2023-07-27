@@ -1,0 +1,253 @@
+<?xml version="1.0" ?>
+<robot name="rlcar" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find rlcar_gazebo)/urdf/materials.xacro" />
+  <xacro:include filename="$(find rlcar_gazebo)/urdf/macros.xacro" />
+  <xacro:include filename="$(find rlcar_gazebo)/urdf/rlcar_body.gazebo" />
+
+  <link name="base_footprint" />
+
+  <link name="base_link">
+    <inertial>
+      <!-- <origin xyz="0.08610442944117125 -0.0010181684635799757 0.03851437758777222" rpy="0 0 0"/> -->
+      <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+      <mass value="2.9675633650363595"/>
+      <inertia ixx="0.011642" iyy="0.035651" izz="0.038255" ixy="0.000148" iyz="-9.3e-05" ixz="0.000342"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/ASSAYBODY.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/ASSAYBODY.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="base_footprint_joint" type="fixed">
+    <parent link="base_footprint"/>
+    <child link="base_link"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <link name="lf_steering_hinge_link">
+    <inertial>
+      <xacro:steering_hinge_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:steering_hinge_geometry />
+    </visual>
+  </link>
+
+  <joint name="lf_steering_hinge_joint" type="revolute">
+    <origin xyz="0.276 0.0867 0" rpy="0 1.5708 0" />
+    <parent link="base_link" />
+    <child link="lf_steering_hinge_link" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-0.7853" upper="0.7853" effort="10" velocity="100" />
+  </joint>
+
+  <link name="lf_wheel_link">
+    <inertial>
+      <origin xyz="0.0 -1.4645191273516483e-15 1.0536108829867972e-17" rpy="0 0 0"/>
+      <mass value="0.20069792517970372"/>
+      <inertia ixx="0.00025" iyy="0.00014" izz="0.00014" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="lf_wheel_joint" type="continuous">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 1.5707" />
+    <parent link="lf_steering_hinge_link" />
+    <child link="lf_wheel_link" />
+    <axis xyz="1 0 0" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <link name="rf_steering_hinge_link">
+    <inertial>
+      <xacro:steering_hinge_inertial_params />
+    </inertial>
+    <visual>
+      <xacro:steering_hinge_geometry />
+    </visual>
+  </link>
+
+  <joint name="rf_steering_hinge_joint" type="revolute">
+    <origin xyz="0.276 -0.0867 0" rpy="0 1.5708 0" />
+    <parent link="base_link" />
+    <child link="rf_steering_hinge_link" />
+    <axis xyz="-1 0 0" />
+    <limit lower="-0.7853" upper="0.7853" effort="10" velocity="100" />
+  </joint>
+
+  <link name="rf_wheel_link">
+    <inertial>
+      <origin xyz="0.0 -1.4645191273516483e-15 1.0536108829867972e-17" rpy="0 0 0"/>
+      <mass value="0.20069792517970372"/>
+      <inertia ixx="0.00025" iyy="0.00014" izz="0.00014" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rf_wheel_joint" type="continuous">
+    <origin xyz="0.0 0.0 0.0" rpy="0 0 1.5707" />
+    <parent link="rf_steering_hinge_link" />
+    <child link="rf_wheel_link" />
+    <axis xyz="1 0 0" />
+    <limit effort="10" velocity="100" />
+  </joint>
+
+  <link name="lr_wheel_link">
+    <inertial>
+      <origin xyz="0.0 -1.4645191273516483e-15 1.0536108829867972e-17" rpy="0 0 0"/>
+      <mass value="0.20069792517970372"/>
+      <inertia ixx="0.00025" iyy="0.00014" izz="0.00014" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="lr_wheel_joint" type="continuous">
+    <origin xyz="0.0 0.0867 0.0" rpy="0 0 1.5707" />
+    <parent link="base_link" />
+    <child link="lr_wheel_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="rr_wheel_link">
+    <inertial>
+      <origin xyz="0.0 -1.4645191273516483e-15 1.0536108829867972e-17" rpy="0 0 0"/>
+      <mass value="0.20069792517970372"/>
+      <inertia ixx="0.00025" iyy="0.00014" izz="0.00014" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/wheel.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rr_wheel_joint" type="continuous">
+    <origin xyz="0.0 -0.0867 0.0" rpy="0 0 1.5707" />
+    <parent link="base_link" />
+    <child link="rr_wheel_link" />
+    <axis xyz="1 0 0" />
+  </joint>
+
+  <link name="rplidar_a2_link">
+    <inertial>
+      <origin xyz="0.0034625894668202637 0.00010269753328175684 0.02092482852234422" rpy="0 0 0"/>
+      <mass value="0.06839266167546813"/>
+      <inertia ixx="3.8e-05" iyy="3.9e-05" izz="5.5e-05" ixy="0.0" iyz="-0.0" ixz="-2e-06"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/rplidar_a2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/rplidar_a2.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="rplidar_a2_joint" type="fixed">
+    <origin xyz="0.1945 0.0 0.1449" rpy="0 0 0" />
+    <parent link="base_link" />
+    <child link="rplidar_a2_link" />
+  </joint>
+
+  <link name="logi_camera_link">
+    <inertial>
+      <origin xyz="-0.017293584176189366 -2.4383966124928845e-05 0.020495008384212435" rpy="0 0 0"/>
+      <mass value="0.15033659991756945"/>
+      <inertia ixx="8.7e-05" iyy="7.2e-05" izz="0.000108" ixy="0.0" iyz="0.0" ixz="-2e-05"/>
+    </inertial>
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/logi_camera.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="$(find rlcar_gazebo)/meshes/logi_camera.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="logi_camera_joint" type="fixed">
+    <origin xyz="0.3065 0 0.0982" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="logi_camera_link"/>
+  </joint>
+
+  <link name="imu_link">
+    <inertial>
+      <mass value="0.01"/>
+      <inertia ixx="1.0" ixy="0" ixz="0" iyy="1.0" iyz="0" izz="1.0"/>
+    </inertial>
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0.2715 0 0.041" rpy="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+
+</robot>
