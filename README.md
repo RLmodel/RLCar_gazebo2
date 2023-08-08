@@ -33,7 +33,7 @@ ros2 launch rlcar_gazebo racecourse.launch.py use_rviz:=false
 ros2 launch rlcar_gazebo_slam slam_toolbox.launch.py 
 ```
 ![Screenshot from 2023-08-08 09-26-40](https://github.com/RLmodel/RLCar_gazebo2/assets/32663016/c01030b6-b1cf-4a08-aca2-a81caec9f6bd)
-
+![Screenshot from 2023-08-06 20-48-22](https://github.com/RLmodel/RLCar_gazebo2/assets/32663016/55951fcf-7399-413d-ace2-e40457ff65f4)
 
 * Navigation
 
