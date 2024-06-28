@@ -9,7 +9,10 @@ colcon build --symlink-install --packages-select rlcar_gazebo
 colcon build --symlink-install --packages-select rlcar_gazebo_controller
 colcon build --symlink-install --packages-select rlcar_gazebo_odometry
 colcon build --symlink-install --packages-select rlcar_gazebo_slam
-sudo apt install ros-foxy-jackal-simulator 
+sudo apt install ros-foxy-rqt-robot-steering
+sudo apt install ros-foxy-jackal-simulator
+sudo apt install ros-foxy-controller-manager
+sudo apt install ros-foxy-velocity-controllers
 ```
 
 * Desc
